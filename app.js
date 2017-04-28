@@ -27,14 +27,14 @@ var y = d3.scale.linear()
           .range([height, 0])
 function plot(params){
   //enter
-    this.selectAll('.point')
+    this.selectAll('.'+params.class)
         .data(params.data)
         .enter()
             .append('circle')
-            .classed('point', true)
+            .classed(params.class, true)
             .attr('r', 4)
   //update
-  this.selectAll('.point')
+  this.selectAll('.'+params.class)
       .attr('cx', function(d,i){
         return x(i)
       })
@@ -42,7 +42,7 @@ function plot(params){
         return y(d[params.year])
       })
   //exit
-  this.selectAll('.point')
+  this.selectAll('.'+params.class)
       .data(params.data)
       .exit()
       .remove();
@@ -50,5 +50,12 @@ function plot(params){
 
 plot.call(chart, {
   data: data,
-  year: '2004'
+  year: '2004',
+  class: 'oldPoints'
+})
+
+plot.call(chart, {
+  data: data,
+  year: '2014',
+  class: 'newPoints'
 })
