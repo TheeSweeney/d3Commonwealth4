@@ -18,7 +18,11 @@ body,html{
 }
 
 .y.axis .domain{
-	fill: none;
+	stroke-width: 0;
+}
+
+.x.axis .domain{
+	stroke: #ccc;
 }
 
 .bar {

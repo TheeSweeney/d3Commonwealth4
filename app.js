@@ -18,14 +18,22 @@ var chart = svg.append('g')
               .classed('display', true)
               .attr('transform','translate(' + margin.right  + ',' + margin.top + ')')
 var x = d3.scaleLinear()
-          .domain([0, data.length-1])
+          .domain([-1, data.length-1])
           .range([0, width])
 var y = d3.scaleLinear()
           .domain([0, 160])
           .range([height, 0])
 var xAxis = d3.axisBottom(x)
-
+              .tickFormat(function(d){
+                if(data[d] !== undefined){
+                  return data[d].country
+                }
+              })
+              .tickSize(0)
+              
 var yAxis = d3.axisLeft(y)
+              .tickSize(0)
+
 
 
 
