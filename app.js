@@ -17,21 +17,16 @@ var svg = d3.select('body').append('svg')
 var chart = svg.append('g')
               .classed('display', true)
               .attr('transform','translate(' + margin.right  + ',' + margin.top + ')')
-var x = d3.scale.linear()
+var x = d3.scaleLinear()
           .domain([0, data.length-1])
           .range([0, width])
-var y = d3.scale.linear()
+var y = d3.scaleLinear()
           .domain([0, 160])
           .range([height, 0])
-var xAxis = d3.svg.axis()
-              .scale(x)
-              .orient('bottom')
-              .tickFormat(function(d){
-                return data[d].country
-              })
-var yAxis = d3.svg.axis()
-              .scale(y)
-              .orient('left')
+var xAxis = d3.axisBottom(x)
+
+var yAxis = d3.axisLeft(y)
+
 
 
 function plotAxes(params){//duplicated in ex1
