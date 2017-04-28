@@ -53,6 +53,11 @@ function plotPoints(params){
             .append('circle')
             .classed(params.class, true)
             .attr('r', 4)
+  this.selectAll('.bar')
+      .data(params.data)
+      .enter()
+        .append('rect')
+        .classed('bar', true)
   //update
   this.selectAll('.'+params.class)
       .attr('cx', function(d,i){
@@ -61,8 +66,23 @@ function plotPoints(params){
       .attr('cy', function(d,i){
         return y(d[params.year])
       })
+  this.selectAll('.bar')
+      .attr('x', function(d,i){
+        return x(i)
+      })
+      .attr('y', function(d,i){
+        return y(d[params.year])
+      })
+      .attr('width', 1)
+      .attr('height', function(d,i){
+        return height - y(d[params.year])
+      })
   //exit
   this.selectAll('.'+params.class)
+      .data(params.data)//TODO factor this and following two lines into single function
+      .exit()
+      .remove();
+  this.selectAll('.bar')
       .data(params.data)
       .exit()
       .remove();
