@@ -18,7 +18,7 @@ var chart = svg.append('g')
               .classed('display', true)
               .attr('transform','translate(' + margin.right  + ',' + margin.top + ')')
 var x = d3.scaleLinear()
-          .domain([-1, data.length-1])
+          .domain([-.5, data.length-.5])
           .range([0, width])
 var y = d3.scaleLinear()
           .domain([0, 160])
@@ -30,7 +30,7 @@ var xAxis = d3.axisBottom(x)
                 }
               })
               .tickSize(0)
-              
+
 var yAxis = d3.axisLeft(y)
               .tickSize(0)
 
