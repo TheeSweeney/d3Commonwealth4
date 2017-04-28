@@ -18,14 +18,34 @@ var chart = svg.append('g')
               .classed('display', true)
               .attr('transform','translate(' + margin.right  + ',' + margin.top + ')')
 var x = d3.scale.linear()
-          .domain([0, data.length])
-          .range([width, 0])
+          .domain([0, data.length-1])
+          .range([0, width])
 var y = d3.scale.linear()
-          .domain([0, d3.max(data, function(d){
-            return d['2014']
-          })])
+          .domain([0, 160])
           .range([height, 0])
-function plot(params){
+var xAxis = d3.svg.axis()
+              .scale(x)
+              .orient('bottom')
+              .tickFormat(function(d){
+                return data[d].country
+              })
+var yAxis = d3.svg.axis()
+              .scale(y)
+              .orient('left')
+
+
+function plotAxes(params){//duplicated in ex1
+  this.append('g')
+      .classed('x axis', true)
+      .attr('transform','translate(0,' + height + ')')
+      .call(params.axis.x)
+  this.append('g')
+      .classed('y axis', true)
+      .attr('transform','translate(0,0)')
+      .call(params.axis.y)
+}
+
+function plotPoints(params){
   //enter
     this.selectAll('.'+params.class)
         .data(params.data)
@@ -48,13 +68,20 @@ function plot(params){
       .remove();
 }
 
-plot.call(chart, {
+plotAxes.call(chart, {
+  axis: {
+    x: xAxis,
+    y: yAxis
+  }
+})
+
+plotPoints.call(chart, {
   data: data,
   year: '2004',
   class: 'oldPoints'
 })
 
-plot.call(chart, {
+plotPoints.call(chart, {
   data: data,
   year: '2014',
   class: 'newPoints'

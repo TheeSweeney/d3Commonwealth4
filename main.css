@@ -8,29 +8,15 @@ body,html{
 #chart{
 	border: 1px solid #CCC;
 }
-.bar{
-	fill: purple;
-	shape-rendering: crispEdges;
+
+.oldPoints {
+	fill: rgb(250, 202, 168);
 }
-.bar-label{
-	fill: white;
-	text-anchor: end;
-	font-size: 18px;
+
+.newPoints {
+	fill: rgb(243, 123, 49);
 }
-.axis path,
-.axis line{
+
+.y.axis .domain{
 	fill: none;
-	stroke: #000;
-	shape-rendering: crispEdges;
-}
-.gridline path,
-.gridline line{
-	fill: none;
-	stroke: #ccc;
-	shape-rendering: crispEdges;
-}
-.trendline{
-	fill: none;
-	stroke: #ccc;
-	stroke-width: 4px;
 }
