@@ -45,27 +45,14 @@ function plotAxes(params){//duplicated in ex1
       .call(params.axis.y)
 }
 
-function plotPoints(params){
+function plotLines(params){
   //enter
-    this.selectAll('.'+params.class)
-        .data(params.data)
-        .enter()
-            .append('circle')
-            .classed(params.class, true)
-            .attr('r', 4)
   this.selectAll('.bar')
       .data(params.data)
       .enter()
         .append('rect')
         .classed('bar', true)
   //update
-  this.selectAll('.'+params.class)
-      .attr('cx', function(d,i){
-        return x(i)
-      })
-      .attr('cy', function(d,i){
-        return y(d[params.year])
-      })
   this.selectAll('.bar')
       .attr('x', function(d,i){
         return x(i)
@@ -78,12 +65,31 @@ function plotPoints(params){
         return height - y(d[params.year])
       })
   //exit
-  this.selectAll('.'+params.class)
-      .data(params.data)//TODO factor this and following two lines into single function
-      .exit()
-      .remove();
   this.selectAll('.bar')
       .data(params.data)
+      .exit()
+      .remove();
+}
+
+function plotPoints(params){
+  //enter
+    this.selectAll('.'+params.class)
+        .data(params.data)
+        .enter()
+            .append('circle')
+            .classed(params.class, true)
+            .attr('r', 4)
+  //update
+  this.selectAll('.'+params.class)
+      .attr('cx', function(d,i){
+        return x(i)
+      })
+      .attr('cy', function(d,i){
+        return y(d[params.year])
+      })
+  //exit
+  this.selectAll('.'+params.class)
+      .data(params.data)//TODO factor this and following two lines into single function
       .exit()
       .remove();
 }
@@ -93,6 +99,11 @@ plotAxes.call(chart, {
     x: xAxis,
     y: yAxis
   }
+})
+
+plotLines.call(chart,{
+  data: data,
+  year: '2014'
 })
 
 plotPoints.call(chart, {
