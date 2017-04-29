@@ -55,6 +55,7 @@ var sortdiff_btn = controls.append('button')
 
 function plotAxes(params){//duplicated in ex1
   this.select('.x.axis').remove()
+  this.select('.y.axis').remove()
 
   this.append('g')
       .classed('x axis', true)
@@ -64,6 +65,14 @@ function plotAxes(params){//duplicated in ex1
       .classed('y axis', true)
       .attr('transform','translate(0,0)')
       .call(params.axis.y)
+
+  this.select('.y.axis')//Top Label
+        .append('text')
+        .style('font-size', '12px')
+        .style('fill', '#ccc')
+        .attr('x', 150)
+        .attr('y',-20)
+        .text('Deaths per 100,000 population')
 
   for(var i = 1; i < 6; i++){
     d3.select('#note' + i)

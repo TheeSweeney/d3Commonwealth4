@@ -35,7 +35,12 @@ body,html{
 	border-width: 1px;
 	border-color: #ccc;
 }
+text {
+	fill: #ccc;
+	font-weight: 300;
+}
 
 .note {
 	font-size: 10px;
+	fill: black;
 }
