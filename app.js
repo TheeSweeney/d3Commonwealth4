@@ -65,8 +65,10 @@ function plotAxes(params){//duplicated in ex1
       .attr('transform','translate(0,0)')
       .call(params.axis.y)
 
-  d3.select('.note')
+  for(var i = 1; i < 6; i++){
+    d3.select('#note' + i)
     .remove()
+  }
   d3.select('.display')//Note
     .append('text')
     .attr('id', 'note1')
@@ -76,28 +78,28 @@ function plotAxes(params){//duplicated in ex1
     .html('Source: European Observatory on Health Systems and Policies (2017). Trends in amenable mortality for selected countries, 2000-2014.')
   d3.select('.display')//Note
     .append('text')
-    .attr('id', 'note1')
+    .attr('id', 'note2')
     .attr('x',0)
     .attr('y', height + 60)
     .classed('alignLeft note', true)
     .html('Data for 2014 in all countries except Canada (2011), France (2013), Netherlands (2013), New Zealand (2012), Switzerland (2013), UK (2013).')
   d3.select('.display')//Note
     .append('text')
-    .attr('id', 'note1')
+    .attr('id', 'note3')
     .attr('x',0)
     .attr('y', height + 70)
     .classed('alignLeft note', true)
     .html('Amenable mortality causes based on Nolte & McKee (2004). Mortality and population data derived from WHO mortality files, September 2016;')
   d3.select('.display')//Note
     .append('text')
-    .attr('id', 'note1')
+    .attr('id', 'note4')
     .attr('x',0)
     .attr('y', height + 80)
     .classed('alignLeft note', true)
     .html('Population data for Canada and the USA derived from the Human Mortality Database. Age-specific rates standardised to the European Standard Population 2013.')
 d3.select('.display')//Note
     .append('text')
-    .attr('id', 'note1')
+    .attr('id', 'note5')
     .attr('x',0)
     .attr('y', height + 90)
     .classed('alignLeft note', true)
