@@ -35,3 +35,7 @@ body,html{
 	border-width: 1px;
 	border-color: #ccc;
 }
+
+.note {
+	font-size: 10px;
+}
