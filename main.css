@@ -28,3 +28,10 @@ body,html{
 .bar {
 	fill: #ccc;
 }
+
+.btn {
+	margin: 0 5px 0 5px;
+	background-color: white;
+	border-width: 1px;
+	border-color: #ccc;
+}

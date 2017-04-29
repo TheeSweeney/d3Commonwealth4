@@ -36,11 +36,21 @@ var xAxis = d3.axisBottom(x)
 
 var yAxis = d3.axisLeft(y)
               .tickSize(0)
-var sort_btn = controls.append('button')
-                      .html('Sort data: ascending')
+var sort2004_btn = controls.append('button')
+                      .html('Sort Low to High by 2004 rate')
                       .attr('state', 0)
-
-
+                      .attr('id','sort2004btn')
+                      .classed('btn', true)
+var sort2014_btn = controls.append('button')
+                      .html('Sort Low to High by 2014 rate')
+                      .attr('state', 0)
+                      .attr('id','sort2014btn')
+                      .classed('btn', true)
+var sortdiff_btn = controls.append('button')
+                      .html('Sort by amount of change')
+                      .attr('state', 0)
+                      .attr('id','sortdiffbtn')
+                      .classed('btn', true)
 
 
 function plotAxes(params){//duplicated in ex1
@@ -102,29 +112,36 @@ function plotPoints(params){
       .exit()
       .remove();
 }
+var state='2004';
+var ascending = function(a,b){
+  console.log(a[state], a.country)
+  return a[state] - b[state]
+}
+// var descending = function(a,b){
+//   return b.value - a.value
+// }
+sort2004_btn.on('click', function(){
+  state = "2004"
+  data.initial.sort(ascending)
+  plot();
+})
 
-sort_btn.on('click', function(){
+sort2014_btn.on('click', function(){
+  state = "2014"
+  data.initial.sort(ascending)
+  console.log(data.initial['2014'])
+  plot();
+})
+
+sortdiff_btn.on('click', function(){
   var self = d3.select(this);
-  var ascending = function(a,b){
-    return a.value - b.value
-  }
-  var descending = function(a,b){
-    return b.value - a.value
-  }
-  var state = +self.attr('state');
-  var txt = "Sort data: ";
-  if(state == 0){
-    data.initial.sort(ascending)
-    state = 1;
-    txt += 'descending';
-  }else if(state === 1){
-    data.initial.sort(descending)
-    state = 0;
-    txt += 'ascending';
-  }
-  console.log(data.initial)
+  var state = self.attr('state');
+
+  data.initial.sort(ascending)
+  state = 'diff';
+  
+  console.log(data.initial['20'])
   self.attr('state', state)
-  self.html(txt)
 })
 
 plotAxes.call(chart, {
@@ -133,20 +150,23 @@ plotAxes.call(chart, {
     y: yAxis
   }
 })
+function plot() {
+  plotLines.call(chart,{
+    data: data.initial,
+    year: '2014'
+  })
 
-plotLines.call(chart,{
-  data: data.initial,
-  year: '2014'
-})
+  plotPoints.call(chart, {
+    data: data.initial,
+    year: '2004',
+    class: 'oldPoints'
+  })
 
-plotPoints.call(chart, {
-  data: data.initial,
-  year: '2004',
-  class: 'oldPoints'
-})
+  plotPoints.call(chart, {
+    data: data.initial,
+    year: '2014',
+    class: 'newPoints'
+  })
+}
 
-plotPoints.call(chart, {
-  data: data.initial,
-  year: '2014',
-  class: 'newPoints'
-})
+plot()
