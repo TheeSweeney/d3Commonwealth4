@@ -17,22 +17,28 @@ var svg = d3.select('body').append('svg')
 var chart = svg.append('g')
               .classed('display', true)
               .attr('transform','translate(' + margin.right  + ',' + margin.top + ')')
+var controls = d3.select('body')
+                .append('div')
+                .attr('id', 'controls');
 var x = d3.scaleLinear()
-          .domain([-.5, data.length-.5])
+          .domain([-.5, data.initial.length-.5])
           .range([0, width])
 var y = d3.scaleLinear()
           .domain([0, 160])
           .range([height, 0])
 var xAxis = d3.axisBottom(x)
               .tickFormat(function(d){
-                if(data[d] !== undefined){
-                  return data[d].country
+                if(data.initial[d] !== undefined){
+                  return data.initial[d].country
                 }
               })
               .tickSize(0)
 
 var yAxis = d3.axisLeft(y)
               .tickSize(0)
+var sort_btn = controls.append('button')
+                      .html('Sort data: ascending')
+                      .attr('state', 0)
 
 
 
@@ -97,6 +103,30 @@ function plotPoints(params){
       .remove();
 }
 
+sort_btn.on('click', function(){
+  var self = d3.select(this);
+  var ascending = function(a,b){
+    return a.value - b.value
+  }
+  var descending = function(a,b){
+    return b.value - a.value
+  }
+  var state = +self.attr('state');
+  var txt = "Sort data: ";
+  if(state == 0){
+    data.initial.sort(ascending)
+    state = 1;
+    txt += 'descending';
+  }else if(state === 1){
+    data.initial.sort(descending)
+    state = 0;
+    txt += 'ascending';
+  }
+  console.log(data.initial)
+  self.attr('state', state)
+  self.html(txt)
+})
+
 plotAxes.call(chart, {
   axis: {
     x: xAxis,
@@ -105,18 +135,18 @@ plotAxes.call(chart, {
 })
 
 plotLines.call(chart,{
-  data: data,
+  data: data.initial,
   year: '2014'
 })
 
 plotPoints.call(chart, {
-  data: data,
+  data: data.initial,
   year: '2004',
   class: 'oldPoints'
 })
 
 plotPoints.call(chart, {
-  data: data,
+  data: data.initial,
   year: '2014',
   class: 'newPoints'
 })
