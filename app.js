@@ -73,6 +73,8 @@ function plotLines(params){
         .classed('bar', true)
   //update
   this.selectAll('.bar')
+      .transition()
+      .duration(500)
       .attr('x', function(d,i){
         return x(i)
       })
@@ -97,9 +99,11 @@ function plotPoints(params){
         .enter()
             .append('circle')
             .classed(params.class, true)
-            .attr('r', 4)
   //update
   this.selectAll('.'+params.class)
+      .transition()
+      .duration(500)
+      .attr('r', 4)
       .attr('cx', function(d,i){
         return x(i)
       })
@@ -114,7 +118,6 @@ function plotPoints(params){
 }
 var state='2004';
 var ascending = function(a,b){
-  console.log(a[state], a.country)
   return a[state] - b[state]
 }
 // var descending = function(a,b){
@@ -129,19 +132,13 @@ sort2004_btn.on('click', function(){
 sort2014_btn.on('click', function(){
   state = "2014"
   data.initial.sort(ascending)
-  console.log(data.initial['2014'])
   plot();
 })
 
 sortdiff_btn.on('click', function(){
-  var self = d3.select(this);
-  var state = self.attr('state');
-
+  state = "diff"
   data.initial.sort(ascending)
-  state = 'diff';
-  
-  console.log(data.initial['20'])
-  self.attr('state', state)
+  plot();
 })
 
 plotAxes.call(chart, {
