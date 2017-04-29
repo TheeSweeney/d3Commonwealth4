@@ -54,6 +54,8 @@ var sortdiff_btn = controls.append('button')
 
 
 function plotAxes(params){//duplicated in ex1
+  this.select('.x.axis').remove()
+
   this.append('g')
       .classed('x axis', true)
       .attr('transform','translate(0,' + height + ')')
@@ -126,18 +128,36 @@ var ascending = function(a,b){
 sort2004_btn.on('click', function(){
   state = "2004"
   data.initial.sort(ascending)
+  plotAxes.call(chart, {
+    axis: {
+      x: xAxis,
+      y: yAxis
+    }
+  })
   plot();
 })
 
 sort2014_btn.on('click', function(){
   state = "2014"
   data.initial.sort(ascending)
+  plotAxes.call(chart, {
+    axis: {
+      x: xAxis,
+      y: yAxis
+    }
+  })
   plot();
 })
 
 sortdiff_btn.on('click', function(){
   state = "diff"
   data.initial.sort(ascending)
+  plotAxes.call(chart, {
+    axis: {
+      x: xAxis,
+      y: yAxis
+    }
+  })
   plot();
 })
 
@@ -147,6 +167,7 @@ plotAxes.call(chart, {
     y: yAxis
   }
 })
+
 function plot() {
   plotLines.call(chart,{
     data: data.initial,
