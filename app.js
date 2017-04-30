@@ -47,7 +47,7 @@ var sort2014_btn = controls.append('button')
                       .attr('id','sort2014btn')
                       .classed('btn', true)
 var sortdiff_btn = controls.append('button')
-                      .html('Sort by amount of change')
+                      .html('Sort by Amount of Improvement')
                       .attr('state', 0)
                       .attr('id','sortdiffbtn')
                       .classed('btn', true)
@@ -69,7 +69,7 @@ function plotAxes(params){//duplicated in ex1
   this.select('.y.axis')//Top Label
         .append('text')
         .style('font-size', '12px')
-        .style('fill', '#ccc')
+        .style('fill', '#808080')
         .attr('x', 150)
         .attr('y',-20)
         .text('Deaths per 100,000 population')
@@ -171,9 +171,9 @@ var state='2004';
 var ascending = function(a,b){
   return a[state] - b[state]
 }
-// var descending = function(a,b){
-//   return b.value - a.value
-// }
+var descending = function(a,b){
+  return b[state] - a[state]
+}
 sort2004_btn.on('click', function(){
   state = "2004"
   data.initial.sort(ascending)
@@ -200,7 +200,7 @@ sort2014_btn.on('click', function(){
 
 sortdiff_btn.on('click', function(){
   state = "diff"
-  data.initial.sort(ascending)
+  data.initial.sort(descending)
   plotAxes.call(chart, {
     axis: {
       x: xAxis,
