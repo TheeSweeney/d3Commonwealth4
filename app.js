@@ -1,10 +1,10 @@
 
 var w = 800;
-var h = 450;
+var h = 500;
 var margin = {
-  top: 58,
+  top: 108,
   bottom: 100,
-  left: 80,
+  left: 40,
   right: 40
 };
 var width = w - margin.left - margin.right;
@@ -54,6 +54,13 @@ var sortdiff_btn = controls.append('button')
 
 
 function plotAxes(params){//duplicated in ex1
+
+  svg.insert('text')//Title
+      .attr('x', 20)
+      .attr('y', 40)
+      .attr('id', 'chartTitle')
+      .html("Mortality Amenable to Health Care, 2004 and 2014")
+
   this.select('.x.axis').remove()
   this.select('.y.axis').remove()
 
