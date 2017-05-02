@@ -173,13 +173,15 @@ function plotPoints(params){
         return y(d[params.year])
       })
   this.selectAll('.label')
+      .transition()
+      .duration(500)
       .attr('x', function(d){
+        console.log('here')
         return x(d.rank - 1) - (d.country.length*2.5)
       })
       .attr('y', height + 15)
       .attr('fill', 'black')
       .text(function(d, i){
-        console.log(d)
         return d.country
       })
   //exit
@@ -200,15 +202,13 @@ var descending = function(a,b){
   return b[state] - a[state]
 }
 sort2004_btn.on('click', function(){
-  state = "2004"
-  data.initial.sort(ascending)
   plotAxes.call(chart, {
     axis: {
       x: xAxis,
       y: yAxis
     }
   })
-  plot();
+  plot(data.initial);
 })
 
 sort2014_btn.on('click', function(){
