@@ -28,9 +28,7 @@ var y = d3.scaleLinear()
           .range([height, 0])
 var xAxis = d3.axisBottom(x)
               .tickFormat(function(d){
-                if(data.initial[d] !== undefined){
-                  return data.initial[d].country
-                }
+                return
               })
               .tickSize(0)
 
@@ -123,7 +121,6 @@ d3.select('.display')//Note
 }
 
 function plotLines(params){
-  console.log(params)
   //enter
   this.selectAll('.bar')
       .data(params.data)
@@ -158,6 +155,12 @@ function plotPoints(params){
         .enter()
             .append('circle')
             .classed(params.class, true)
+    this.selectAll('.label')
+        .data(params.data)
+        .enter()
+            .append('text')
+            .classed('label', true)
+
   //update
   this.selectAll('.'+params.class)
       .transition()
@@ -169,11 +172,25 @@ function plotPoints(params){
       .attr('cy', function(d,i){
         return y(d[params.year])
       })
+  this.selectAll('.label')
+      .attr('x', function(d){
+        return x(d.rank - 1) - (d.country.length*2.5)
+      })
+      .attr('y', height + 15)
+      .attr('fill', 'black')
+      .text(function(d, i){
+        console.log(d)
+        return d.country
+      })
   //exit
   this.selectAll('.'+params.class)
       .data(params.data)//TODO factor this and following two lines into single function
       .exit()
       .remove();
+  this.selectAll('.label')
+      .data(params.data)
+      .exit()
+      .remove()
 }
 var state='2004';
 var ascending = function(a,b){
@@ -201,7 +218,6 @@ sort2014_btn.on('click', function(){
       y: yAxis
     }
   })
-  console.log(data)
   plot(data['2014Ascending']);
 })
 
@@ -225,7 +241,6 @@ plotAxes.call(chart, {
 })
 
 function plot(data) {
-  console.log(data)
   plotLines.call(chart,{
     data: data,
     year: '2014'
