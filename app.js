@@ -123,6 +123,7 @@ d3.select('.display')//Note
 }
 
 function plotLines(params){
+  console.log(params)
   //enter
   this.selectAll('.bar')
       .data(params.data)
@@ -163,7 +164,7 @@ function plotPoints(params){
       .duration(500)
       .attr('r', 4)
       .attr('cx', function(d,i){
-        return x(i)
+        return x(d.rank - 1)
       })
       .attr('cy', function(d,i){
         return y(d[params.year])
@@ -194,15 +195,14 @@ sort2004_btn.on('click', function(){
 })
 
 sort2014_btn.on('click', function(){
-  state = "2014"
-  data.initial.sort(ascending)
   plotAxes.call(chart, {
     axis: {
       x: xAxis,
       y: yAxis
     }
   })
-  plot();
+  console.log(data)
+  plot(data['2014Ascending']);
 })
 
 sortdiff_btn.on('click', function(){
@@ -224,23 +224,24 @@ plotAxes.call(chart, {
   }
 })
 
-function plot() {
+function plot(data) {
+  console.log(data)
   plotLines.call(chart,{
-    data: data.initial,
+    data: data,
     year: '2014'
   })
 
   plotPoints.call(chart, {
-    data: data.initial,
+    data: data,
     year: '2004',
     class: 'oldPoints'
   })
 
   plotPoints.call(chart, {
-    data: data.initial,
+    data: data,
     year: '2014',
     class: 'newPoints'
   })
 }
 
-plot()
+plot(data.initial)
