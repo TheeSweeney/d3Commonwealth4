@@ -135,7 +135,7 @@ function plotLines(params){
       .transition()
       .duration(500)
       .attr('x', function(d,i){
-        return x(i)
+        return x(d.rank - 1)
       })
       .attr('y', function(d,i){
         return y(d[params.year])
