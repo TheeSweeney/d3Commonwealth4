@@ -36,17 +36,14 @@ var yAxis = d3.axisLeft(y)
               .tickSize(0)
 var sort2004_btn = controls.append('button')
                       .html('Sort Low to High by 2004 rate')
-                      .attr('state', 0)
                       .attr('id','sort2004btn')
                       .classed('btn', true)
 var sort2014_btn = controls.append('button')
                       .html('Sort Low to High by 2014 rate')
-                      .attr('state', 0)
                       .attr('id','sort2014btn')
                       .classed('btn', true)
 var sortdiff_btn = controls.append('button')
                       .html('Sort by Amount of Improvement')
-                      .attr('state', 0)
                       .attr('id','sortdiffbtn')
                       .classed('btn', true)
 
@@ -176,7 +173,6 @@ function plotPoints(params){
       .transition()
       .duration(500)
       .attr('x', function(d){
-        console.log('here')
         return x(d.rank - 1) - (d.country.length*2.5)
       })
       .attr('y', height + 15)
@@ -193,13 +189,6 @@ function plotPoints(params){
       .data(params.data)
       .exit()
       .remove()
-}
-var state='2004';
-var ascending = function(a,b){
-  return a[state] - b[state]
-}
-var descending = function(a,b){
-  return b[state] - a[state]
 }
 sort2004_btn.on('click', function(){
   plotAxes.call(chart, {
@@ -222,15 +211,13 @@ sort2014_btn.on('click', function(){
 })
 
 sortdiff_btn.on('click', function(){
-  state = "diff"
-  data.initial.sort(descending)
   plotAxes.call(chart, {
     axis: {
       x: xAxis,
       y: yAxis
     }
   })
-  plot();
+  plot(data['diffAscending']);
 })
 
 plotAxes.call(chart, {
