@@ -156,6 +156,9 @@ function plotLines(params){
       .enter()
         .append('rect')
         .classed('bar', true)
+        .attr('id', function(d){
+          return d.country + 'bar';
+        })
   //update
   this.selectAll('.bar')
       .transition()
@@ -177,18 +180,38 @@ function plotLines(params){
       .remove();
 }
 
+function infoBox(d){
+  console.log(d.rank)
+  this.append('rect')
+      .attr('x', function(){
+        return x(d.rank - 1) - 25;
+      })
+      .attr('y', function(){
+        return y(d['2004']) - 60
+      })
+      .attr('width', 50)      
+      .attr('height', 50)
+      .attr('fill', 'black')      
+}
+
 function plotPoints(params){
   //enter
-    this.selectAll('.'+params.class)
-        .data(params.data)
-        .enter()
-            .append('circle')
-            .classed(params.class, true)
-    this.selectAll('.label')
-        .data(params.data)
-        .enter()
-            .append('text')
-            .classed('label', true)
+  this.selectAll('.'+params.class)
+      .data(params.data)
+      .enter()
+          .append('circle')
+          .classed(params.class, true)
+          .on('click', function(d){
+            infoBox.call(chart, d)
+          })
+  this.selectAll('.label')
+      .data(params.data)
+      .enter()
+          .append('text')
+          .classed('label', true)
+          .on('click', function(d){
+            infoBox.call(chart, d)
+          })
 
   //update
   this.selectAll('.'+params.class)
