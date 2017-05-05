@@ -181,18 +181,73 @@ function plotLines(params){
 }
 
 function infoBox(d){
-  console.log(d.rank)
-  this.append('rect')
-      .attr('x', function(){
-        return x(d.rank - 1) - 25;
-      })
-      .attr('y', function(){
-        return y(d['2004']) - 60
-      })
-      .attr('width', 50)      
-      .attr('height', 50)
-      .attr('fill', 'black')      
+  if(!activeBoxes.includes(d.country)){
+    this.append('rect')
+        .attr('x', function(){
+          return x(d.rank - 1) - 35;
+        })
+        .attr('y', function(){
+          return y(d['2004']) - 60
+        })
+        .attr('width', function(){
+          return d['2004'] > 99 ? 85 :  75;
+        })      
+        .attr('height', 50)
+        .attr('fill', 'white') 
+        .attr('stroke', '#808080')
+        .attr('rx', 5)
+        .attr('id', d.country + 'InfoBox')
+    this.append('text')//2004 number
+        .attr('x', function(){
+          return x(d.rank - 1) + 12;
+        })
+        .attr('y', function(){
+          return y(d['2004']) - 38;
+        })
+        .classed('infoNumber', true)
+        .text(function(){
+          return Math.round(d['2004'])
+        })
+
+    this.append('text')//2014 number
+        .attr('x', function(){
+          return x(d.rank - 1) + 12;
+        })
+        .attr('y', function(){
+          return y(d['2004']) - 18;
+        })
+        .classed('infoNumber', true)
+        .text(function(){
+          return Math.round(d['2014'])
+        })
+
+    this.append('text')//2004 text
+        .attr('x', function(){
+          return x(d.rank - 1) - 28;
+        })
+        .attr('y', function(){
+          return y(d['2004']) - 38;
+        })
+        .attr('id', 'keyOldText')
+        .text('2004:')
+
+    this.append('text')//2014 text
+        .attr('x', function(){
+          return x(d.rank - 1) - 28;
+        })
+        .attr('y', function(){
+          return y(d['2004']) - 18;
+        })
+        .attr('id', 'keyNewText')
+        .text('2014:')
+
+  }else{
+    this.select('#' + d.country + 'InfoBox')
+        .remove()
+  }
 }
+
+var activeBoxes = [];
 
 function plotPoints(params){
   //enter
@@ -202,6 +257,7 @@ function plotPoints(params){
           .append('circle')
           .classed(params.class, true)
           .on('click', function(d){
+            activeBoxes.includes(d.country) ? activeBoxes.splice(activeBoxes.indexOf(d.country), 1) : activeBoxes.push(d.country);
             infoBox.call(chart, d)
           })
   this.selectAll('.label')
@@ -214,7 +270,7 @@ function plotPoints(params){
           })
 
   //update
-  this.selectAll('.'+params.class)
+  this.selectAll('.' + params.class)
       .transition()
       .duration(500)
       .attr('r', 4)
@@ -228,7 +284,7 @@ function plotPoints(params){
       .transition()
       .duration(500)
       .attr('x', function(d){
-        return x(d.rank - 1) - (d.country.length*2.5)
+        return x(d.rank - 1) - (d.country.length * 2.5)
       })
       .attr('y', height + 15)
       .attr('fill', 'black')
@@ -236,7 +292,7 @@ function plotPoints(params){
         return d.country
       })
   //exit
-  this.selectAll('.'+params.class)
+  this.selectAll('.' + params.class)
       .data(params.data)//TODO factor this and following two lines into single function
       .exit()
       .remove();

@@ -20,11 +20,11 @@ body,html{
 	font-size: 14px;
 }
 
-.oldPoints{
+.oldPoints, #keyOldText{
 	fill: rgb(250, 202, 168);
 }
 
-.newPoints {
+.newPoints, #keyNewText {
 	fill: rgb(243, 123, 49);
 }
 
@@ -54,4 +54,8 @@ text {
 .note {
 	font-size: 10px;
 	fill: black;
+}
+
+.infoNumber{
+	font-size: 20px;
 }
