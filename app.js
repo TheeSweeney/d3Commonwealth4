@@ -76,6 +76,8 @@ function plotAxes(params){//duplicated in ex1
         .attr('y',-20)
         .text('Deaths per 100,000 population')
 
+
+
   for(var i = 1; i < 6; i++){
     d3.select('#note' + i)
     .remove()

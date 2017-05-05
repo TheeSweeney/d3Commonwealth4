@@ -39,14 +39,3 @@ var data = {
     {country: 'US', '2014': 111.702972108998, '2004': 132.996402106568, rank: 11},
   ]
 };
-
-function diff(arr){
-  var difference = {}
-  for(var i = 0; i < arr.length; i++){
-    difference[arr[i].country] = arr[i]['2014'] - arr[i]['2004']
-    data['2014Ascending'][i].diff = arr[i]['2014'] - arr[i]['2004']
-  }
-  console.log(difference)
-}
-
-diff(data['2014Ascending'])
