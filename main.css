@@ -8,6 +8,7 @@ body,html{
 
 .label {
 	cursor: default;
+	font-weight: 300;
 }
 
 #chart{
