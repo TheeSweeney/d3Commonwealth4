@@ -21,7 +21,7 @@ var controls = d3.select('body')
                 .append('div')
                 .attr('id', 'controls');
 var x = d3.scaleLinear()
-          .domain([-.5, data.initial.length-.5])
+          .domain([-.5, data['2014Ascending'].length-.5])
           .range([0, width])
 var y = d3.scaleLinear()
           .domain([0, 160])
@@ -197,7 +197,7 @@ sort2004_btn.on('click', function(){
       y: yAxis
     }
   })
-  plot(data.initial);
+  plot(data['2004Ascending']);
 })
 
 sort2014_btn.on('click', function(){
@@ -217,7 +217,7 @@ sortdiff_btn.on('click', function(){
       y: yAxis
     }
   })
-  plot(data['diffAscending']);
+  plot(data['diffDescending']);
 })
 
 plotAxes.call(chart, {
@@ -230,7 +230,7 @@ plotAxes.call(chart, {
 function plot(data) {
   plotLines.call(chart,{
     data: data,
-    year: '2014'
+    year: '2004'
   })
 
   plotPoints.call(chart, {
@@ -246,4 +246,4 @@ function plot(data) {
   })
 }
 
-plot(data.initial)
+plot(data['2014Ascending'])
