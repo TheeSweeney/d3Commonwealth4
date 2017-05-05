@@ -197,6 +197,8 @@ function infoBox(d){
         .attr('stroke', '#808080')
         .attr('rx', 5)
         .attr('id', d.country + 'InfoBox')
+        .classed('infoBox', true)
+
     this.append('text')//2004 number
         .attr('x', function(){
           return x(d.rank - 1) + 12;
@@ -204,7 +206,8 @@ function infoBox(d){
         .attr('y', function(){
           return y(d['2004']) - 38;
         })
-        .classed('infoNumber', true)
+        .classed(' info infoNumber', true)
+        .attr('id', d.country + 'OldInfoNumber')
         .text(function(){
           return Math.round(d['2004'])
         })
@@ -216,7 +219,8 @@ function infoBox(d){
         .attr('y', function(){
           return y(d['2004']) - 18;
         })
-        .classed('infoNumber', true)
+        .classed('info infoNumber', true)
+        .attr('id', d.country + 'NewInfoNumber')
         .text(function(){
           return Math.round(d['2014'])
         })
@@ -228,7 +232,8 @@ function infoBox(d){
         .attr('y', function(){
           return y(d['2004']) - 38;
         })
-        .attr('id', 'keyOldText')
+        .attr('id', d.country + 'OldInfoText')
+        .classed('info oldInfoText', true)
         .text('2004:')
 
     this.append('text')//2014 text
@@ -238,13 +243,29 @@ function infoBox(d){
         .attr('y', function(){
           return y(d['2004']) - 18;
         })
-        .attr('id', 'keyNewText')
+        .attr('id', d.country + 'NewInfoText')
+        .classed('info newInfoText', true)
         .text('2014:')
 
   }else{
     this.select('#' + d.country + 'InfoBox')
         .remove()
+    this.select('#' + d.country + 'OldInfoText')
+        .remove()
+    this.select('#' + d.country + 'NewInfoText')
+        .remove()
+    this.select('#' + d.country + 'OldInfoNumber')
+        .remove()
+    this.select('#' + d.country + 'NewInfoNumber')
+        .remove()
   }
+}
+
+function clearInfoNodes(){
+  this.selectAll('.infoBox')
+      .remove();
+  this.selectAll('.info')
+      .remove();
 }
 
 var activeBoxes = [];
@@ -266,6 +287,7 @@ function plotPoints(params){
           .append('text')
           .classed('label', true)
           .on('click', function(d){
+            activeBoxes.includes(d.country) ? activeBoxes.splice(activeBoxes.indexOf(d.country), 1) : activeBoxes.push(d.country);
             infoBox.call(chart, d)
           })
 
@@ -302,14 +324,17 @@ function plotPoints(params){
       .remove()
 }
 sort2004_btn.on('click', function(){
+  clearInfoNodes.call(chart);
   plot(data['2004Ascending']);
 })
 
 sort2014_btn.on('click', function(){
+  clearInfoNodes.call(chart);
   plot(data['2014Ascending']);
 })
 
 sortdiff_btn.on('click', function(){
+  clearInfoNodes.call(chart);
   plot(data['diffDescending']);
 })
 

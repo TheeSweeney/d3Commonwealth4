@@ -5,6 +5,11 @@ body,html{
 	font-size: 0.95em;
 	text-align: center;
 }
+
+.label {
+	cursor: default;
+}
+
 #chart{
 	border: 1px solid #CCC;
 }
@@ -20,11 +25,11 @@ body,html{
 	font-size: 14px;
 }
 
-.oldPoints, #keyOldText{
+.oldPoints, .oldInfoText{
 	fill: rgb(250, 202, 168);
 }
 
-.newPoints, #keyNewText {
+.newPoints, .newInfoText {
 	fill: rgb(243, 123, 49);
 }
 
