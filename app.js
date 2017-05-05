@@ -76,6 +76,36 @@ function plotAxes(params){//duplicated in ex1
         .attr('y',-20)
         .text('Deaths per 100,000 population')
 
+  this.select('.y.axis')// old key point
+      .append('circle')
+      .attr('r', 4)
+      .attr('fill', 'rgb(250, 202, 168)')
+      .attr('cx', 650)
+      .attr('cy', -30)
+
+  this.select('.y.axis')// new key point
+      .append('circle')
+      .attr('r', 4)
+      .attr('fill', 'rgb(243, 123, 49)')
+      .attr('cx', 650)
+      .attr('cy', -15)
+
+   this.select('.y.axis')// old key point
+      .append('text')
+      .attr('r', 4)
+      .attr('x', 660)
+      .attr('y', -30)
+      .text('2004')
+      .classed('keyText', true)
+
+  this.select('.y.axis')// new key point
+      .append('text')
+      .attr('r', 4)
+      .attr('x', 660)
+      .attr('y', -15)
+      .text('2014')
+      .classed('keyText', true)
+
 
 
   for(var i = 1; i < 6; i++){
@@ -193,32 +223,14 @@ function plotPoints(params){
       .remove()
 }
 sort2004_btn.on('click', function(){
-  plotAxes.call(chart, {
-    axis: {
-      x: xAxis,
-      y: yAxis
-    }
-  })
   plot(data['2004Ascending']);
 })
 
 sort2014_btn.on('click', function(){
-  plotAxes.call(chart, {
-    axis: {
-      x: xAxis,
-      y: yAxis
-    }
-  })
   plot(data['2014Ascending']);
 })
 
 sortdiff_btn.on('click', function(){
-  plotAxes.call(chart, {
-    axis: {
-      x: xAxis,
-      y: yAxis
-    }
-  })
   plot(data['diffDescending']);
 })
 

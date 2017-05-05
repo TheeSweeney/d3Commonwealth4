@@ -14,7 +14,13 @@ body,html{
 	fill: black;
 }
 
-.oldPoints {
+.keyText {
+	fill: black;
+	text-anchor: start;
+	font-size: 14px;
+}
+
+.oldPoints{
 	fill: rgb(250, 202, 168);
 }
 
