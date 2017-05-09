@@ -187,30 +187,15 @@ function infoBox(d){
           return x(d.rank - 1) - 35;
         })
         .attr('y', function(){
-          return y(d['2004']) - 60
+          return y(d['2004']) - 55
         })
-        .attr('width', function(){
-          return d['2004'] > 99 ? 85 :  75;
-        })      
-        .attr('height', 50)
+        .attr('width', 70)      
+        .attr('height', 45)
         .attr('fill', 'white') 
         .attr('stroke', '#808080')
         .attr('rx', 5)
         .attr('id', d.country + 'InfoBox')
         .classed('infoBox', true)
-
-    this.append('text')//2004 number
-        .attr('x', function(){
-          return x(d.rank - 1) + 12;
-        })
-        .attr('y', function(){
-          return y(d['2004']) - 38;
-        })
-        .classed(' info infoNumber', true)
-        .attr('id', d.country + 'OldInfoNumber')
-        .text(function(){
-          return Math.round((d['2004'] - d['2014'])*100/d['2004']) + '%'
-        })
 
     this.append('text')// text top line
         .attr('x', function(){
