@@ -181,48 +181,46 @@ function plotLines(params){
 }
 
 function infoBox(d){
-  if(!activeBoxes.includes(d.country)){
-    this.append('rect')
-        .attr('x', function(){
-          return x(d.rank - 1) - 35;
-        })
-        .attr('y', function(){
-          return y(d['2004']) - 55
-        })
-        .attr('width', 70)      
-        .attr('height', 45)
-        .attr('fill', 'white') 
-        .attr('stroke', '#808080')
-        .attr('rx', 5)
-        .attr('id', d.country + 'InfoBox')
-        .classed('infoBox', true)
+  this.append('rect')
+      .attr('x', function(){
+        return x(d.rank - 1) - 35;
+      })
+      .attr('y', function(){
+        return y(d['2004']) - 55
+      })
+      .attr('width', 70)      
+      .attr('height', 45)
+      .attr('fill', 'white') 
+      .attr('stroke', '#808080')
+      .attr('rx', 5)
+      .attr('id', d.country + 'InfoBox')
+      .classed('infoBox', true)
 
-    this.append('text')// text top line
-        .attr('x', function(){
-          return x(d.rank - 1) - 28;
-        })
-        .attr('y', function(){
-          return y(d['2004']) - 38;
-        })
-        .attr('id', d.country + 'OldInfoText')
-        .classed('info', true)
-        .text(function(){
-          console.log(d)
-          return ('Down ' + Math.round(d['2004'] - d['2014']))
-        })
-    this.append('text')// text bottom line
-        .attr('x', function(){
-          return x(d.rank - 1) - 28;
-        })
-        .attr('y', function(){
-          return y(d['2004']) - 18;
-        })
-        .attr('id', d.country + 'NewInfoText')
-        .classed('info', true)
-        .text('deaths')
+  this.append('text')// text top line
+      .attr('x', function(){
+        return x(d.rank - 1) - 28;
+      })
+      .attr('y', function(){
+        return y(d['2004']) - 38;
+      })
+      .attr('id', d.country + 'OldInfoText')
+      .classed('info', true)
+      .text(function(){
+        return ('Down ' + Math.round(d['2004'] - d['2014']))
+      })
+  this.append('text')// text bottom line
+      .attr('x', function(){
+        return x(d.rank - 1) - 28;
+      })
+      .attr('y', function(){
+        return y(d['2004']) - 18;
+      })
+      .attr('id', d.country + 'NewInfoText')
+      .classed('info', true)
+      .text('deaths')
+}
 
-
-  }else{
+function removeInfoBox(d){
     this.select('#' + d.country + 'InfoBox')
         .remove()
     this.select('#' + d.country + 'OldInfoText')
@@ -233,17 +231,8 @@ function infoBox(d){
         .remove()
     this.select('#' + d.country + 'NewInfoNumber')
         .remove()
-  }
 }
 
-function clearInfoNodes(){
-  this.selectAll('.infoBox')
-      .remove();
-  this.selectAll('.info')
-      .remove();
-}
-
-var activeBoxes = [];
 
 function plotPoints(params){
   //enter
@@ -252,18 +241,22 @@ function plotPoints(params){
       .enter()
           .append('circle')
           .classed(params.class, true)
-          .on('click', function(d){
-            activeBoxes.includes(d.country) ? activeBoxes.splice(activeBoxes.indexOf(d.country), 1) : activeBoxes.push(d.country);
+          .on('mouseenter', function(d){
             infoBox.call(chart, d)
+          })
+          .on('mouseleave', function(d){
+            removeInfoBox.call(chart, d)
           })
   this.selectAll('.label')
       .data(params.data)
       .enter()
           .append('text')
           .classed('label', true)
-          .on('click', function(d){
-            activeBoxes.includes(d.country) ? activeBoxes.splice(activeBoxes.indexOf(d.country), 1) : activeBoxes.push(d.country);
+          .on('mouseenter', function(d){
             infoBox.call(chart, d)
+          })
+          .on('mouseleave', function(d){
+            removeInfoBox.call(chart, d)
           })
 
   //update
@@ -299,17 +292,14 @@ function plotPoints(params){
       .remove()
 }
 sort2004_btn.on('click', function(){
-  clearInfoNodes.call(chart);
   plot(data['2004Ascending']);
 })
 
 sort2014_btn.on('click', function(){
-  clearInfoNodes.call(chart);
   plot(data['2014Ascending']);
 })
 
 sortdiff_btn.on('click', function(){
-  clearInfoNodes.call(chart);
   plot(data['diffDescending']);
 })
 
