@@ -209,23 +209,10 @@ function infoBox(d){
         .classed(' info infoNumber', true)
         .attr('id', d.country + 'OldInfoNumber')
         .text(function(){
-          return Math.round(d['2004'])
+          return Math.round((d['2004'] - d['2014'])*100/d['2004']) + '%'
         })
 
-    this.append('text')//2014 number
-        .attr('x', function(){
-          return x(d.rank - 1) + 12;
-        })
-        .attr('y', function(){
-          return y(d['2004']) - 18;
-        })
-        .classed('info infoNumber', true)
-        .attr('id', d.country + 'NewInfoNumber')
-        .text(function(){
-          return Math.round(d['2014'])
-        })
-
-    this.append('text')//2004 text
+    this.append('text')// text top line
         .attr('x', function(){
           return x(d.rank - 1) - 28;
         })
@@ -233,10 +220,12 @@ function infoBox(d){
           return y(d['2004']) - 38;
         })
         .attr('id', d.country + 'OldInfoText')
-        .classed('info oldInfoText', true)
-        .text('2004:')
-
-    this.append('text')//2014 text
+        .classed('info', true)
+        .text(function(){
+          console.log(d)
+          return ('Down ' + Math.round(d['2004'] - d['2014']))
+        })
+    this.append('text')// text bottom line
         .attr('x', function(){
           return x(d.rank - 1) - 28;
         })
@@ -244,8 +233,9 @@ function infoBox(d){
           return y(d['2004']) - 18;
         })
         .attr('id', d.country + 'NewInfoText')
-        .classed('info newInfoText', true)
-        .text('2014:')
+        .classed('info', true)
+        .text('deaths')
+
 
   }else{
     this.select('#' + d.country + 'InfoBox')
