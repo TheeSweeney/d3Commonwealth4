@@ -329,4 +329,54 @@ function plot(data) {
   })
 }
 
-plot(data['2014Ascending'])
+function resize(params){
+  w = window.outerWidth - 50;
+  h = w * .625 - 50;
+
+  width = w - margin.left - margin.right;
+  height = h - margin.top - margin.bottom;
+
+  x = d3.scaleLinear()
+        .domain([-.5, data['2014Ascending'].length-.5])
+        .range([0, width])
+  y = d3.scaleLinear()
+        .domain([0, 160])
+        .range([height, 0])
+  xAxis = d3.axisBottom(x)
+            .tickFormat(function(d){
+              return
+            })
+            .tickSize(0)
+
+  yAxis = d3.axisLeft(y)
+            .tickSize(0)
+  
+  d3.select(this.node().parentNode)//resize SVG element
+        .attr('height', h + 50)
+        .attr('width', w)
+
+  this.selectAll('g')//remove axes
+      .remove();
+  d3.selectAll('.keyText')
+      .remove();
+  // this.selectAll('keyText')
+  //     .remove();  
+  d3.select('#chartTitle')
+      .remove();
+
+  plotAxes.call(chart, {
+    axis: {
+      x: xAxis,
+      y: yAxis
+    }
+  })
+
+  plot(data['2014Ascending'])
+
+}
+
+resize.call(chart);
+
+window.addEventListener('resize', function(){
+  resize.call(chart)
+})
