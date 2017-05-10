@@ -34,17 +34,17 @@ var xAxis = d3.axisBottom(x)
 
 var yAxis = d3.axisLeft(y)
               .tickSize(0)
-var sort2004_btn = controls.append('button')
-                      .html('Sort Low to High by 2004 rate')
-                      .attr('id','sort2004btn')
-                      .classed('btn', true)
 var sort2014_btn = controls.append('button')
                       .html('Sort Low to High by 2014 rate')
                       .attr('id','sort2014btn')
                       .classed('btn', true)
-var sortdiff_btn = controls.append('button')
-                      .html('Sort by Amount of Improvement')
-                      .attr('id','sortdiffbtn')
+var sortLeast_btn = controls.append('button')
+                      .html('Sort by least improved')
+                      .attr('id','sortleastbtn')
+                      .classed('btn', true)
+var sortMost_btn = controls.append('button')
+                      .html('Sort by most improved')
+                      .attr('id','sortmostbtn')
                       .classed('btn', true)
 
 
@@ -291,16 +291,17 @@ function plotPoints(params){
       .exit()
       .remove()
 }
-sort2004_btn.on('click', function(){
-  plot(data['2004Ascending']);
-})
 
 sort2014_btn.on('click', function(){
   plot(data['2014Ascending']);
 })
 
-sortdiff_btn.on('click', function(){
-  plot(data['diffDescending']);
+sortLeast_btn.on('click', function(){
+  plot(data['diffLeast']);
+})
+
+sortMost_btn.on('click', function(){
+  plot(data['diffMost']);
 })
 
 plotAxes.call(chart, {
