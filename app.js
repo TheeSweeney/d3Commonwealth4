@@ -206,7 +206,7 @@ function infoBox(d){
       .attr('id', d.country + 'OldInfoText')
       .classed('info', true)
       .text(function(){
-        return ('Down ' + Math.round(d['2004'] - d['2014']))
+        return (Math.round(d['2004'] - d['2014']) + ' fewer')
       })
   this.append('text')// text bottom line
       .attr('x', function(){
